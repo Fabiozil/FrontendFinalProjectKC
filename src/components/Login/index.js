@@ -18,7 +18,7 @@ function Login() {
 
     const onSubmit = (data) => {
         alert(JSON.stringify(data));
-        console.log(process.env.BACKEND_HOST);
+        console.log(process.env.REACT_APP_BACKEND_HOST);
     };
 
     return (
