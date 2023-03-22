@@ -9,9 +9,13 @@ import { Home } from "../Home";
 import { Login } from "../Login";
 import { Register } from "../Login/Register";
 import { Navbar } from "../Navbar";
-import { Randomizer } from "../Randomizer";
+import { NewPost } from "../NewPost";
 import { Copyright } from "../Copyright";
 import { Container } from "../Container";
+import { useSelector } from "react-redux";
+import { MyPosts } from "../MyPosts";
+import { EditPost } from "../EditPost";
+import { Contact } from "../Contact";
 
 //Functions definition
 const theme = createTheme({
@@ -31,6 +35,8 @@ const theme = createTheme({
 
 //App definition
 function App() {
+    const token = useSelector((state) => state.value);
+    console.log(token);
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -38,14 +44,37 @@ function App() {
                 <Navbar />
                 <Container>
                     <Routes>
-                        <Route exact path="/" element={<Login />} />
-                        <Route exact path="/register" element={<Register />} />
                         <Route
                             exact
-                            path="/randomizer"
-                            element={<Randomizer />}
+                            path="/"
+                            element={token ? <Home /> : <Login />}
                         />
-                        <Route exact path="/home" element={<Home />} />
+                        <Route
+                            exact
+                            path="/register"
+                            element={token ? <Home /> : <Register />}
+                        />
+                        <Route
+                            exact
+                            path="/new-post"
+                            element={token ? <NewPost /> : <Login />}
+                        />
+                        <Route
+                            exact
+                            path="/edit-post"
+                            element={token ? <EditPost /> : <Login />}
+                        />
+                        <Route
+                            exact
+                            path="/posts"
+                            element={token ? <MyPosts /> : <Login />}
+                        />
+                        <Route
+                            exact
+                            path="/home"
+                            element={token ? <Home /> : <Login />}
+                        />
+                        <Route exact path="/contact" element={<Contact />} />
                     </Routes>
                 </Container>
                 <Copyright />

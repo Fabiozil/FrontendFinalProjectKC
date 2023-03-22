@@ -3,10 +3,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 
-import { RandomizerForm } from "./RandomizerForm";
-import { RandomizerResult } from "./RandomizerResult";
+import { NewPostForm } from "./NewPostForm";
 
-function Randomizer() {
+function NewPost() {
     const [result, setResult] = useState([]);
 
     return (
@@ -16,25 +15,23 @@ function Randomizer() {
             >
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
-                        <Typography variant="h3" align="center">
-                            Welcome to the SmiteIt Randomizer!
+                        <Typography variant="h3" align="center" color="primary">
+                            Create New Post
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
                         <Typography variant="subtitle1" align="center">
-                            Please provide at least the mandatory info to
-                            generate a completly random build. Please use this
-                            in normal queues, just for fun
+                            Please provide all the information to generate a new
+                            Post
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
-                        <RandomizerForm setResult={setResult} />
+                        <NewPostForm />
                     </Grid>
-                    <RandomizerResult result={result} />
                 </Grid>
             </Box>
         </>
     );
 }
 
-export { Randomizer };
+export { NewPost };

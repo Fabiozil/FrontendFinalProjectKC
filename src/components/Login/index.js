@@ -11,14 +11,44 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm } from "react-hook-form";
-import { Copyright } from "../Copyright";
+import { useDispatch } from "react-redux";
+import { setAuthToken } from "../Storage/authSlice";
+import axios from "axios";
 
 function Login() {
     const { register, handleSubmit } = useForm();
+    const dispatch = useDispatch();
 
-    const onSubmit = (data) => {
-        alert(JSON.stringify(data));
-        console.log(process.env.REACT_APP_BACKEND_HOST);
+    const onSubmit = async (data) => {
+        if (!(data.email && data.password)) {
+            alert("Please provide all the fields for the login");
+        } else {
+            try {
+                const authResponse = await axios.post(
+                    `${process.env.REACT_APP_BACKEND_HOST}/auth/login`,
+                    { email: data.email, password: data.password },
+                    {
+                        headers: {
+                            "x-api-key": process.env.REACT_APP_TOKEN_KEY,
+                        },
+                    }
+                );
+
+                if (authResponse.data.data.status === "error") {
+                    alert(authResponse.data.data.message);
+                } else {
+                    dispatch(setAuthToken(authResponse.data.data.response[0]));
+                    alert("Logged in successfully!");
+                }
+            } catch (err) {
+                console.error(err.response);
+                if (err.response.status === 400) {
+                    alert(err.response.data.message[0]);
+                } else {
+                    alert("Error logging in");
+                }
+            }
+        }
     };
 
     return (
@@ -31,7 +61,7 @@ function Login() {
                     alignItems: "center",
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -47,7 +77,7 @@ function Login() {
                         margin="normal"
                         required
                         fullWidth
-                        {...register("name")}
+                        {...register("email")}
                         id="email"
                         label="Email Address"
                         name="email"
@@ -83,7 +113,13 @@ function Login() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
+                            <Link
+                                href="#"
+                                variant="body2"
+                                onClick={() => {
+                                    alert("Not implemented yet!");
+                                }}
+                            >
                                 Forgot password?
                             </Link>
                         </Grid>
@@ -95,7 +131,6 @@ function Login() {
                     </Grid>
                 </Box>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
     );
 }

@@ -3,57 +3,19 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useForm, FormProvider } from "react-hook-form";
 import { TextInput } from "../TextInput";
-import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setAuthToken } from "../Storage/authSlice";
+import EmailIcon from "@mui/icons-material/Email";
 
-function Register() {
+function Contact() {
     const { register, handleSubmit } = useForm();
-    const dispatch = useDispatch();
 
     const onSubmit = async (data) => {
-        if (data.password !== data.repeatPassword) {
-            alert("Password values dont match");
-        } else {
-            try {
-                const authResponse = await axios.post(
-                    `${process.env.REACT_APP_BACKEND_HOST}/auth/register`,
-                    {
-                        email: data.email,
-                        password: data.password,
-                        username: data.username,
-                    },
-                    {
-                        headers: {
-                            "x-api-key": process.env.REACT_APP_TOKEN_KEY,
-                        },
-                    }
-                );
-
-                console.log(authResponse);
-                if (authResponse.data.status === "error") {
-                    alert(authResponse.data.message);
-                } else {
-                    dispatch(setAuthToken(authResponse.data.data.response[0]));
-                    alert("Registered successfully!");
-                }
-            } catch (err) {
-                console.error(err);
-                if (err.response.status === 400) {
-                    alert(err.response.data.message[0]);
-                } else {
-                    alert("Error logging in");
-                }
-            }
-        }
+        alert("Contact email sent. Thanks! We'll be on touch");
     };
 
     const onError = (error) => {
@@ -81,10 +43,10 @@ function Register() {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                    <LockOutlinedIcon />
+                    <EmailIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Register
+                    Contact Form
                 </Typography>
                 <FormProvider {...form}>
                     <Box
@@ -116,21 +78,18 @@ function Register() {
                             required
                         />
                         <TextInput
-                            name={"password"}
-                            label="Password"
+                            name={"cellphone"}
+                            label="Contact Phone"
                             rules={{ required: "Required Field!" }}
-                            autoComplete="current-password"
-                            id="password"
+                            id="contactPhone"
                             required
-                            type="password"
                         />
                         <TextInput
-                            name={"repeatPassword"}
-                            label="Repeat Password"
+                            name={"tellUs"}
+                            label="Tell Us"
                             rules={{ required: "Required Field!" }}
-                            id="repeatPassword"
+                            id="tellUs"
                             required
-                            type="password"
                         />
                         <Button
                             type="submit"
@@ -138,15 +97,8 @@ function Register() {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                         >
-                            Register
+                            Send email
                         </Button>
-                        <Grid container>
-                            <Grid item>
-                                <Link href="/" variant="body2">
-                                    {"Have an account? Log in"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                     </Box>
                 </FormProvider>
             </Box>
@@ -154,4 +106,4 @@ function Register() {
     );
 }
 
-export { Register };
+export { Contact };

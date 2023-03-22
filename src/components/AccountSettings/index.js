@@ -8,16 +8,27 @@ import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import IconButton from "@mui/material/IconButton";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../Storage/authSlice";
 
 function AccountSettings() {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const token = useSelector((state) => state.value);
+    const dispatch = useDispatch();
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLogout = () => {
+        dispatch(logout());
+        alert("Logged out successfully!");
+    };
+
     return (
         <>
             <Tooltip title="Account settings">
@@ -76,16 +87,13 @@ function AccountSettings() {
                 }}
             >
                 <MenuItem>
-                    <AccountCircleIcon /> My account
+                    <AccountCircleIcon
+                        sx={{ width: 30, height: 30, marginRight: 1 }}
+                    />
+                    {token ? token.username : ""}
                 </MenuItem>
                 <Divider />
-                <MenuItem>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
-                <MenuItem>
+                <MenuItem onClick={handleLogout}>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>

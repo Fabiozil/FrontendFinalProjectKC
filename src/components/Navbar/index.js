@@ -3,41 +3,51 @@ import React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import QueryStatsIcon from "@mui/icons-material/QueryStats";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
+import AddBusinessIcon from "@mui/icons-material/AddBusiness";
+import InventoryIcon from "@mui/icons-material/Inventory";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import StoreMallDirectoryIcon from "@mui/icons-material/StoreMallDirectory";
+import LoginIcon from "@mui/icons-material/Login";
+import { useSelector } from "react-redux";
 
 //Components Imports
 import { AccountSettings } from "../AccountSettings";
 
 function Navbar() {
+    const token = useSelector((state) => state.value);
     return (
         <>
             <Box sx={{ width: 1 }}>
                 <BottomNavigation showLabels>
                     <BottomNavigationAction
-                        label="Randomizer"
-                        icon={<ShuffleIcon />}
-                        href={"/randomizer"}
+                        label="All Posts"
+                        icon={<StoreMallDirectoryIcon />}
+                        href={"/home"}
                     />
                     <BottomNavigationAction
-                        label="Your Stats"
-                        icon={<QueryStatsIcon />}
-                        href={"stats"}
+                        label="My Posts"
+                        icon={<InventoryIcon />}
+                        href={"/posts"}
                     />
                     <BottomNavigationAction
-                        label="Meta"
-                        icon={<TrendingUpIcon />}
-                        href={"meta"}
+                        label="New Post"
+                        icon={<AddBusinessIcon />}
+                        href={"/new-post"}
                     />
                     <BottomNavigationAction
                         label="Contact"
                         icon={<ContactSupportIcon />}
                         href={"/contact"}
                     />
-                    <AccountSettings />
+                    {token ? (
+                        <AccountSettings />
+                    ) : (
+                        <BottomNavigationAction
+                            label="Login"
+                            icon={<LoginIcon />}
+                            href={"/"}
+                        />
+                    )}
                 </BottomNavigation>
             </Box>
         </>
