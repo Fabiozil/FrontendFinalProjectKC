@@ -18,50 +18,6 @@ function PublicPost({ title, price, photo, id, date, sale, username }) {
     const dispatch = useDispatch();
     const token = useSelector((state) => state.value);
 
-    const deletePost = async () => {
-        try {
-            const result = prompt("Type 'delete' to delete this post");
-            if (result !== "delete") {
-                return;
-            }
-            const newToken = await refreshAuthToken(token);
-            if (newToken) {
-                dispatch(setAuthToken(newToken));
-            } else {
-                dispatch(logout());
-                alert("Session caducated, please login again");
-            }
-
-            const postResponse = await axios.delete(
-                `${process.env.REACT_APP_BACKEND_HOST}/post?id=${id}`,
-                {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                        "x-api-key": process.env.REACT_APP_TOKEN_KEY,
-                        "x-access-token": token.token,
-                    },
-                }
-            );
-            alert("Post deleted successfully!");
-            navigate("/posts");
-        } catch (err) {
-            console.error(err);
-            if (err.response.status === 403) {
-                dispatch(logout());
-                alert("Session caducated, please login again");
-            } else {
-                console.error(err);
-                alert("Error deleting post");
-            }
-        }
-    };
-
-    const editPost = () => {
-        navigate(
-            `/edit-post?id=${id}&title=${title}&price=${price}&image${photo}&sale=${sale}`
-        );
-    };
-
     return (
         <Card sx={{}}>
             <CardHeader title={username} color="primary" />

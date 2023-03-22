@@ -65,30 +65,27 @@ function Home() {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                        {posts.length > 0 ? (
-                            posts.map((post, index) => {
-                                return (
-                                    <Grid item xs={4} key={index}>
-                                        <PublicPost
-                                            title={post.name.S}
-                                            price={post.price.S}
-                                            photo={post.photo.S}
-                                            id={post.id.S}
-                                            date={post.createdAt.S}
-                                            sale={post.sale.BOOL}
-                                            username={post.userName.S}
-                                        />
-                                    </Grid>
-                                );
-                            })
-                        ) : (
-                            <Typography variant="h5" align="center">
-                                Looks like there are no posts yet. Start
-                                posting!
-                            </Typography>
-                        )}
-                    </Grid>
+                    {posts.length > 0 ? (
+                        posts.map((post, index) => {
+                            return (
+                                <Grid item xs={4} key={index}>
+                                    <PublicPost
+                                        title={post.name.S}
+                                        price={post.price.S}
+                                        photo={post.photo.S}
+                                        id={post.id.S}
+                                        date={post.createdAt.S}
+                                        sale={post.sale.BOOL}
+                                        username={post.userName.S}
+                                    />
+                                </Grid>
+                            );
+                        })
+                    ) : (
+                        <Typography variant="h5" align="center">
+                            Looks like there are no posts yet. Start posting!
+                        </Typography>
+                    )}
                 </Grid>
             </Box>
         </>
