@@ -3,7 +3,7 @@ import axios from "axios";
 export async function refreshAuthToken(token) {
     try {
         const newToken = await axios.get(
-            `${process.env.REACT_APP_BACKEND_HOST}/user/refresh-token?token=${token}`,
+            `${process.env.REACT_APP_BACKEND_HOST}/user/refresh-token?token=${token.token}`,
             {
                 headers: {
                     "x-api-key": process.env.REACT_APP_TOKEN_KEY,
