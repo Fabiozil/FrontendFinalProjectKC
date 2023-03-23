@@ -68,6 +68,7 @@ function EditPostForm() {
             alert("Post editted successfully!");
             navigate("/posts");
         } catch (err) {
+            console.error(err);
             if (err.response.status === 403) {
                 dispatch(logout());
                 alert("Session caducated, please login again");

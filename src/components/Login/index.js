@@ -41,7 +41,7 @@ function Login() {
                     alert("Logged in successfully!");
                 }
             } catch (err) {
-                console.error(err.response);
+                console.error(err);
                 if (err.response.status === 400) {
                     alert(err.response.data.message[0]);
                 } else {
