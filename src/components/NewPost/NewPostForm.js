@@ -57,13 +57,12 @@ function NewPostForm() {
             }
 
             const postResponse = await axios.post(
-                `${process.env.REACT_APP_BACKEND_HOST}/post`,
+                `${process.env.REACT_APP_BACKEND_HOST}/post?token=${token.token}`,
                 formData,
                 {
                     headers: {
                         "Content-Type": "multipart/form-data",
                         "x-api-key": process.env.REACT_APP_TOKEN_KEY,
-                        "x-access-token": token.token,
                     },
                 }
             );

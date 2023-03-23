@@ -23,11 +23,10 @@ function Home() {
                 alert("Session caducated, please login again");
             }
             const postsResponse = await axios.get(
-                `${process.env.REACT_APP_BACKEND_HOST}/post`,
+                `${process.env.REACT_APP_BACKEND_HOST}/post?token=${token.token}`,
                 {
                     headers: {
                         "x-api-key": process.env.REACT_APP_TOKEN_KEY,
-                        "x-access-token": token.token,
                     },
                 }
             );
